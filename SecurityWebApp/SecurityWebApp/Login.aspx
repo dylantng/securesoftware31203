@@ -32,10 +32,7 @@
         #form1 {
             height: 353px;
         }
-        .auto-style1 {
-            height: 37px;
-        }
-    </style>
+        </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -86,7 +83,6 @@
         <TextBoxStyle Font-Size="0.8em" />
         <TitleTextStyle BackColor="#507CD1" Font-Bold="True" Font-Size="0.9em" ForeColor="White" />
     </asp:Login>
-    <hr />
     </form>
 </body>
 </html>
