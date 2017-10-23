@@ -22,6 +22,15 @@ namespace SecurityWebApp {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// inputFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputFile inputFile;
+        
+        /// <summary>
         /// submit control.
         /// </summary>
         /// <remarks>
