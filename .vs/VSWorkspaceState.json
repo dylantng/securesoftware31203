@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\SecurityWebApp"
+    "\\SecurityWebApp",
+    "\\SecurityWebApp\\SecurityWebApp",
+    "\\SecurityWebApp\\SecurityWebApp\\App_Data"
   ],
-  "SelectedNode": "\\SecurityWebApp\\SecurityWebApp.sln",
+  "SelectedNode": "\\SecurityWebApp\\SecurityWebApp\\uploadFile.aspx.cs",
   "PreviewInSolutionExplorer": false
 }

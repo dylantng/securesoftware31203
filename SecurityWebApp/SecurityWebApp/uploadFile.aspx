@@ -8,6 +8,7 @@
 </head>
 <body>
     <form id="form1" enctype="multipart/form-data" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"/>
         <div>
             <p>Select File : </p>
             <input type="file" id="inputFile" runat="server" />
@@ -22,10 +23,16 @@
         </div>
 
         <p>
-            <asp:Button ID="submit" runat="server" OnClick="Button1_Click" Text="Upload" />
+            <asp:Button ID="submit" runat="server" OnClientClick="uploadFile()" Text="Upload"/>
+            <asp:HiddenField ID="encrycont" runat="server" />
+            <asp:HiddenField ID="filetype" runat="server" />
+            <asp:HiddenField ID="encryptedKey" runat="server" />
+            <asp:Button runat="server" ID="UploadButton" Text="" style="display:none;" OnClick="Button1_Click" />
+
         </p>
     </form>
 </body>
+
 <script type="text/javascript" src="Scripts/jsencrypt.min.js"></script>
 <script type="text/javascript" src="http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/ricmoo/aes-js/e27b99df/index.js"></script>
@@ -61,26 +68,47 @@
             
             //TODO: WRITE encryptedContent INTO TXT FILE
             console.log("Encrypted content + Cert: ", aesjs.utils.hex.fromBytes(encryptedBytes));
+  
+            //hiddenvalue
+            var encrycont = document.getElementById('encrycont');
+            encrycont.value = encryptedContent;
+
+        
 
             //Encryption of Key
             var encrypt = new JSEncrypt();
             var publicKey = document.getElementById('publickey').value; //Should be gotten from CA
             encrypt.setPublicKey(publicKey);
             var encryptedKey = encrypt.encrypt(keyString);
+
             //TODO WRITE FILE FORMAT & encryptedKey INTO SQL
             console.log("Encrypted Key: ", encryptedKey);
 
+            // get file format
+            var filename = selectedFile.name;
+            var filetype = document.getElementById('filetype');
+            var res = filename.split(".");
+            filetype.value = res[1];
+
+
+            var endKey = document.getElementById('encryptedKey');
+            endKey.value = encryptedKey;
+
+
+            // to trigger code behind to run
+            document.getElementById("UploadButton").click();
             /*
             $.ajax({
                 type: "POST",
-                url: "uploadFile.aspx/upload",
+                url: "uploadFile.aspx/encryptedContent",
                 data: JSON.stringify({ encryptedContent: encryptedContent, encryptedKey: encryptedKey }),
-                contentType: "application/json",
+                contentType: "application/json; charset=utf - 8",
                 dataType: "json",
-                success: function (msg) {
-                    // Replace the div's content with the page method's return.
-                    window.location.replace("uploadFile.aspx");
+                success: OnSuccess,
+                failure: function (response) {
+                    alert(response.d);
                 }
+
             });
             */
 
@@ -88,6 +116,9 @@
 
         reader.readAsArrayBuffer(selectedFile);
         return false;
+    }
+    function OnSuccess(response) {
+        alert(response.d);
     }
 
     function generateKey() {
@@ -98,6 +129,6 @@
         }
         return key;
     }
-
+    
 </script>
 </html>
